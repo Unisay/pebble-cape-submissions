@@ -4,8 +4,8 @@
   "description": "Pebble submissions for UPLC-CAPE benchmark",
   "type": "module",
   "scripts": {
-    "compile:fib": "pebble export --function-name fib --entry benchmarks/fibonacci_naive_recursion/fibonacci_naive_recursion.pebble && cp out/out.flat benchmarks/fibonacci_naive_recursion/fibonacci_naive_recursion.flat && node scripts/flat-to-uplc.js benchmarks/fibonacci_naive_recursion/fibonacci_naive_recursion.flat benchmarks/fibonacci_naive_recursion/fibonacci_naive_recursion.uplc",
-    "compile:fact": "pebble export --function-name factorial --entry benchmarks/factorial_naive_recursion/factorial_naive_recursion.pebble && cp out/out.flat benchmarks/factorial_naive_recursion/factorial_naive_recursion.flat && node scripts/flat-to-uplc.js benchmarks/factorial_naive_recursion/factorial_naive_recursion.flat benchmarks/factorial_naive_recursion/factorial_naive_recursion.uplc",
+    "compile:fib": "pebble export --function-name fib --entry benchmarks/fibonacci_naive_recursion/fibonacci_naive_recursion.pebble && cp out/out.flat benchmarks/fibonacci_naive_recursion/fibonacci_naive_recursion.flat && aiken uplc decode benchmarks/fibonacci_naive_recursion/fibonacci_naive_recursion.flat > benchmarks/fibonacci_naive_recursion/fibonacci_naive_recursion.uplc",
+    "compile:fact": "pebble export --function-name factorial --entry benchmarks/factorial_naive_recursion/factorial_naive_recursion.pebble && cp out/out.flat benchmarks/factorial_naive_recursion/factorial_naive_recursion.flat && aiken uplc decode benchmarks/factorial_naive_recursion/factorial_naive_recursion.flat > benchmarks/factorial_naive_recursion/factorial_naive_recursion.uplc",
     "build": "bun run compile:fib && bun run compile:fact",
     "clean": "rm -rf out && rm -f benchmarks/*/*.flat benchmarks/*/*.uplc"
   },

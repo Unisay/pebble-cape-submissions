@@ -17,12 +17,13 @@
         };
       in {
         devShells.default = pkgs.mkShell {
-          packages = with pkgs; [ bun nodejs_22 git pkg-config openssl ];
+          packages = with pkgs; [ bun nodejs_22 git pkg-config openssl aiken ];
 
           shellHook = ''
             echo "Entering Bun + Node dev shell for ${system}"
             bun --version
             node --version
+            aiken --version
           '';
         };
       });

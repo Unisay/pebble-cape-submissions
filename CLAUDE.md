@@ -11,7 +11,7 @@ This is a benchmark submission repository for the [UPLC-CAPE benchmark](https://
 ### Setup
 
 ```bash
-# Enter Nix development shell (provides bun, nodejs, git)
+# Enter Nix development shell (provides bun, nodejs, git, aiken)
 nix develop
 
 # Install dependencies including Pebble CLI
@@ -47,9 +47,9 @@ Each compilation script performs three steps:
    cp out/out.flat benchmarks/{scenario}/{scenario}.flat
    ```
 
-3. **Flat → UPLC**: Convert binary to textual UPLC representation
+3. **Flat → UPLC**: Convert binary to textual UPLC representation using Aiken
    ```bash
-   node scripts/flat-to-uplc.js benchmarks/{scenario}/{scenario}.flat benchmarks/{scenario}/{scenario}.uplc
+   aiken uplc decode benchmarks/{scenario}/{scenario}.flat > benchmarks/{scenario}/{scenario}.uplc
    ```
 
 ## Architecture
@@ -57,7 +57,7 @@ Each compilation script performs three steps:
 ### Compilation Pipeline
 
 ```
-.pebble source → Pebble CLI → .flat binary → flat-to-uplc.js → .uplc textual
+.pebble source → Pebble CLI → .flat binary → aiken uplc decode → .uplc textual
                                     ↓
                             UPLC-CAPE execution
 ```
@@ -66,7 +66,7 @@ Each compilation script performs three steps:
 - **`.uplc` files**: Textual UPLC in S-expression syntax (primary output, committed to repo)
 - **`.flat` files**: Binary UPLC Flat format (temporary build artifact, gitignored)
 
-**Important**: UPLC-CAPE only uses textual `.uplc` files. The `.flat` files are generated only as an intermediate step because Pebble CLI outputs flat format, which is then converted to textual format.
+**Important**: UPLC-CAPE only uses textual `.uplc` files. The `.flat` files are generated only as an intermediate step because Pebble CLI outputs flat format, which is then converted to textual format using Aiken's `uplc decode` command. Aiken produces standard UPLC S-expression syntax without trailing commas.
 
 ### CAPE Naming Conventions
 
@@ -120,13 +120,14 @@ Based on other CAPE submissions:
 ## Key Dependencies
 
 - `@harmoniclabs/pebble-cli` (v0.1.2) - Pebble to UPLC compiler
-- `@harmoniclabs/uplc` - UPLC parsing and pretty-printing (used by flat-to-uplc.js)
+- `aiken` (v1.1.19) - Cardano smart contract platform providing UPLC tools
 - Bun runtime for fast package management and script execution
 - Nix flake for reproducible development environment
 
-## Conversion Tool
+## UPLC Conversion
 
-The `scripts/flat-to-uplc.js` utility converts UPLC Flat binary format to textual representation:
-- Uses `@harmoniclabs/uplc` library's `parseUPLC()` and `prettyUPLC()` functions
-- Wraps output in `(program VERSION ...)` format matching CAPE conventions
+The build pipeline uses Aiken's `uplc decode` command to convert UPLC Flat binary format to textual representation:
+- Produces standard UPLC S-expression syntax
+- No trailing commas (compliant with UPLC standards)
+- Outputs in `(program VERSION ...)` format matching CAPE conventions
 - Handles all UPLC constructs: lambdas, applications, builtins, constants, etc.
