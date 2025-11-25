@@ -1,0 +1,22 @@
+# Node.js dependencies
+node_modules/
+bun.lockb
+
+# Build artifacts
+*.flat
+out/
+
+# Nix build outputs
+result
+result-*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
