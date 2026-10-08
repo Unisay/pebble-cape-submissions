@@ -10,6 +10,9 @@ out/
 result
 result-*
 
+# direnv
+.direnv/
+
 # IDE
 .vscode/
 .idea/
