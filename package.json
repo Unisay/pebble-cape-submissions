@@ -10,6 +10,6 @@
     "clean": "rm -rf out && rm -f benchmarks/*/*.flat benchmarks/*/*.uplc"
   },
   "dependencies": {
-    "@harmoniclabs/pebble-cli": "^0.1.2"
+    "@harmoniclabs/pebble-cli": "0.4.4"
   }
 }

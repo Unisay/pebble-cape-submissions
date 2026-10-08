@@ -102,7 +102,7 @@ Follow CAPE naming conventions when adding new scenarios:
 
 4. **Add compilation script** to `package.json`:
    ```json
-   "compile:new": "pebble export --function-name fnName --entry benchmarks/{scenario}/{scenario}.pebble --output benchmarks/{scenario}/{scenario}.flat && node scripts/flat-to-uplc.js benchmarks/{scenario}/{scenario}.flat benchmarks/{scenario}/{scenario}.uplc"
+   "compile:new": "pebble export --function-name fnName --entry benchmarks/{scenario}/{scenario}.pebble && cp out/out.flat benchmarks/{scenario}/{scenario}.flat && aiken uplc decode benchmarks/{scenario}/{scenario}.flat > benchmarks/{scenario}/{scenario}.uplc"
    ```
 
 5. **Update `build` script**: Add `&& bun run compile:new` to build chain
@@ -119,7 +119,7 @@ Based on other CAPE submissions:
 
 ## Key Dependencies
 
-- `@harmoniclabs/pebble-cli` (v0.1.2) - Pebble to UPLC compiler
+- `@harmoniclabs/pebble-cli` (v0.4.4, pinned exactly) - Pebble to UPLC compiler. Its output cases on built-in `Bool`, which needs protocol version 11 (van Rossem); `aiken uplc eval` cannot run it
 - `aiken` (v1.1.19) - Cardano smart contract platform providing UPLC tools
 - Bun runtime for fast package management and script execution
 - Nix flake for reproducible development environment

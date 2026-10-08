@@ -7,8 +7,6 @@ This repository hosts [Pebble](https://github.com/HarmonicLabs/pebble) submissio
 - `benchmarks/`: Contains the source code for the benchmarks (following CAPE naming conventions).
   - `fibonacci_naive_recursion/`: Naive recursive Fibonacci implementation.
   - `factorial_naive_recursion/`: Naive recursive Factorial implementation.
-- `scripts/`: Utility scripts for build process.
-  - `flat-to-uplc.js`: Converts UPLC Flat binary format to textual UPLC representation.
 - `flake.nix`: Nix flake defining the development environment.
 - `package.json`: Node.js project configuration and build scripts.
 
@@ -24,9 +22,9 @@ This repository hosts [Pebble](https://github.com/HarmonicLabs/pebble) submissio
    nix develop
    ```
 
-   This provides `bun`, `nodejs`, and other necessary tools.
+   This provides `bun`, `nodejs`, `aiken`, and other necessary tools.
 
-2. Install project dependencies (including the Pebble CLI):
+2. Install project dependencies (including the Pebble CLI, pinned to 0.4.4):
 
    ```bash
    bun install
@@ -64,3 +62,6 @@ bun run clean
 - **`.uplc` files**: Human-readable textual UPLC representation in S-expression syntax (primary output for CAPE benchmarking)
 - **`.flat` files**: Binary UPLC Flat format, generated as intermediate build artifact (gitignored, not committed)
 
+## Protocol Version
+
+Pebble 0.4.4 compiles `if` to a `case` on the built-in `Bool` that `lessThanInteger` returns. Casing on built-in types needs protocol version 11 (van Rossem), so the UPLC runs only on an evaluator that supports it, such as the one in UPLC-CAPE. `aiken uplc eval` from Aiken 1.1.19 rejects it with `attempted to case a non-const`. The build uses Aiken only for `aiken uplc decode`, which is not affected.
