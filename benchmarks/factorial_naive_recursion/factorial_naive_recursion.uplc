@@ -10,7 +10,7 @@
 
       [
         (builtin lessThanInteger) 
-        (con integer 1)
+        (con integer 0)
       ],
 
       (force (builtin ifThenElse))
