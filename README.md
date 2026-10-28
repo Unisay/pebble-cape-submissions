@@ -24,7 +24,7 @@ This repository hosts [Pebble](https://github.com/HarmonicLabs/pebble) submissio
 
    This provides `bun`, `nodejs`, `aiken`, and other necessary tools.
 
-2. Install project dependencies (including the Pebble CLI, pinned to 0.4.4):
+2. Install project dependencies (including the Pebble CLI, pinned to 0.5.0):
 
    ```bash
    bun install
@@ -64,4 +64,4 @@ bun run clean
 
 ## Protocol Version
 
-Pebble 0.4.4 compiles `if` to a `case` on the built-in `Bool` that `lessThanInteger` returns. Casing on built-in types needs protocol version 11 (van Rossem), so the UPLC runs only on an evaluator that supports it, such as the one in UPLC-CAPE. `aiken uplc eval` from Aiken 1.1.19 rejects it with `attempted to case a non-const`. The build uses Aiken only for `aiken uplc decode`, which is not affected.
+Pebble 0.4.4 and 0.5.0 compile `if` to a `case` on the built-in `Bool` that `lessThanInteger` returns. Casing on built-in types needs protocol version 11 (van Rossem), so the UPLC runs only on an evaluator that supports it, such as the one in UPLC-CAPE. `aiken uplc eval` from Aiken 1.1.19 rejects it with `attempted to case a non-const`. The build uses Aiken only for `aiken uplc decode`, which is not affected.

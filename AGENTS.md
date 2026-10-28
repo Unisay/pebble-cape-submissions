@@ -119,7 +119,7 @@ Based on other CAPE submissions:
 
 ## Key Dependencies
 
-- `@harmoniclabs/pebble-cli` (v0.4.4, pinned exactly) - Pebble to UPLC compiler. Its output cases on built-in `Bool`, which needs protocol version 11 (van Rossem); `aiken uplc eval` cannot run it
+- `@harmoniclabs/pebble-cli` (v0.5.0, pinned exactly) - Pebble to UPLC compiler. Its output cases on built-in `Bool`, which needs protocol version 11 (van Rossem); `aiken uplc eval` cannot run it
 - `aiken` (v1.1.19) - Cardano smart contract platform providing UPLC tools
 - Bun runtime for fast package management and script execution
 - Nix flake for reproducible development environment
