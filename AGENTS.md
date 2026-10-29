@@ -117,6 +117,19 @@ Based on other CAPE submissions:
 - `exbudget`: Execution budget optimization
 - `prepacked`: Pre-computed data optimizations
 
+## Branch Model
+
+UPLC-CAPE pins each Pebble row to a commit of this repository and names a branch in the row's `source/README.md`. Each compiler version has a long-lived branch named `pebble-<version>`:
+
+- `main`: the latest compiler version, currently 0.5.0.
+- `pebble-0.5.0`: the branch the 0.5.0 rows name. It has the same history as `main` until `main` moves to the next version.
+- `pebble-0.4.4`: frozen at 0.4.4. It contains both 0.4.4 pins, `f8fad765` (fibonacci) and `22089ad1` (factorial).
+- `pebble-0.1.2`: frozen at 0.1.2. It contains both 0.1.2 pins, `ebb35dbe` (fibonacci) and `a906d905` (factorial). It still converts flat to text with `scripts/flat-to-uplc.js`, whose output has trailing commas.
+
+Never delete or rebase these branches: a fresh clone cannot check out an unreachable pin. Do not move an old branch to newer tooling, because its job is to rebuild the exact UPLC that UPLC-CAPE pins. A fix that applies to several versions, such as a source bug, lands on each affected branch as its own commit, and each affected CAPE row is re-pinned.
+
+To bump the compiler, do the bump on a feature branch, fast-forward `main` to it, and create `pebble-<new version>` at the new `main` head.
+
 ## Key Dependencies
 
 - `@harmoniclabs/pebble-cli` (v0.5.0, pinned exactly) - Pebble to UPLC compiler. Its output cases on built-in `Bool`, which needs protocol version 11 (van Rossem); `aiken uplc eval` cannot run it
